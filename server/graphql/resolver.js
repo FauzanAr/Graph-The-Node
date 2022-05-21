@@ -123,6 +123,19 @@ const resolvers = {
             const article = await Article.findOne({ "comments._id": commentId })
 
             return article
+        },
+        async deleteArticle(parent, args, context, info) {
+            await Article.deleteOne({ _id: args.id });
+
+            return true;
+        },
+        async deleteComment(parent, args, context, info) {
+            const article = await Article.findOne({ "comments._id": args.commentId })
+            
+            article.comments.pull({ _id: args.commentId })
+            article.save()
+
+            return true;
         }
     }
 }

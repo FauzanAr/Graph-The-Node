@@ -29,6 +29,8 @@ const typeDefs = gql`
         addComment (articleId: String, description: String): Article
         editArticle (id: String, title: String, description: String): Article
         editComment (commentId: String, description: String): Article
+        deleteArticle (id: String): Boolean
+        deleteComment (commentId: String): Boolean
     }
 `
 
