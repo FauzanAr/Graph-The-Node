@@ -1,6 +1,6 @@
-const { v4: uuid } = require('uuid');
+const mongoose = require('mongoose');
 
-const { Article } = require('../model');
+const { Article, Comment } = require('../model');
 const timeHelper = require('../helper/time');
 
 const resolvers = {
@@ -76,6 +76,53 @@ const resolvers = {
                     console.log('Found error on addArticles resolvers: ', err);
                     return null;
                 })
+        },
+        async addComment(parent, args, context, info) {
+            const { articleId, description } = args;
+            const data = {                          
+                _id: mongoose.Types.ObjectId(),
+                description,
+                createdAt: timeHelper.getTimeToday(),
+                updatedAt: timeHelper.getTimeToday()
+            }
+
+            const article = await Article.findOne({ _id: articleId })
+
+            article.comments.push(data)
+            article.save();
+
+            return article
+        },
+        async editArticle(parent, args, context, info) {
+            const { id, title, description } = args;
+            const article = await Article.findOne({_id: id})
+
+            article.title = title;
+            article.description = description;
+            article.updatedAt = timeHelper.getTimeToday();
+
+            article.save();
+
+            return article
+        },
+        async editComment(parent, args, context, info) {
+            const { commentId, description } = args;
+
+            await Article.updateOne(
+                {
+                    "comments": { "$elemMatch": {"_id": commentId }}
+                },
+                {
+                    "$set": {
+                        "comments.$.description": description,
+                        "comments.$.updatedAt": timeHelper.getTimeToday()
+                    }
+                }
+            )
+
+            const article = await Article.findOne({ "comments._id": commentId })
+
+            return article
         }
     }
 }

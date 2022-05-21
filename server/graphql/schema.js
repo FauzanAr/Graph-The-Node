@@ -26,6 +26,9 @@ const typeDefs = gql`
 
     type Mutation {
         addArticles (title: String, description: String): Article
+        addComment (articleId: String, description: String): Article
+        editArticle (id: String, title: String, description: String): Article
+        editComment (commentId: String, description: String): Article
     }
 `
 
