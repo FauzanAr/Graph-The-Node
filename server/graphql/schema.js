@@ -20,6 +20,7 @@ const typeDefs = gql`
     type Query {
         articles: [Article],
         article (id: String): Article,
+        comments (articleId: String): [Comment]
         comment (id: String): Comment
     }
 `
