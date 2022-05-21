@@ -1,17 +1,11 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const ArticleSchema = new Schema({
-    title: {
-        type: String,
-        required: true,
-    },
+
+const CommentSchema = new Schema({
     description: {
         type: String,
         required: true,
-    },
-    comments: {
-        type: [CommentSchema],
     },
     createdAt: {
         type: Number,
@@ -23,10 +17,17 @@ const ArticleSchema = new Schema({
     },
 });
 
-const CommentSchema = new Schema({
+const ArticleSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         required: true,
+    },
+    comments: {
+        type: [CommentSchema],
     },
     createdAt: {
         type: Number,
