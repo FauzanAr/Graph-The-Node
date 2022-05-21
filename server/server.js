@@ -3,11 +3,11 @@ const cors = require('cors');
 const { ApolloServer, gql } = require('apollo-server-express');
 
 const config = require('./config')
-const { graphQlSchema } = require('./graphql/schema');
-const { graphQlResolver } = require('./graphql/resolver');
+const { type } = require('./graphql/schema');
+const { resolvers } = require('./graphql/resolver');
 
 const app = express();
-const apolloServer = new ApolloServer({graphQlSchema, graphQlResolver})
+const apolloServer = new ApolloServer({typeDefs: type, resolvers})
 
 app.use(cors());
 
