@@ -56,6 +56,27 @@ const resolvers = {
                     return null;
                 })
         }
+    },
+    Mutation: {
+        addArticles(parent, args, context, info) {
+            const { title, description } = args;
+            const article = new Article({
+                title,
+                description,
+                createdAt: timeHelper.getTimeToday(),
+                updatedAt: timeHelper.getTimeToday()
+            });
+
+            return article.save()
+                .then(res => {
+                    console.log('saved article');
+                    return res
+                })
+                .catch(err => {
+                    console.log('Found error on addArticles resolvers: ', err);
+                    return null;
+                })
+        }
     }
 }
 

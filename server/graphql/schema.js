@@ -1,20 +1,20 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+    type Comment {
+        _id: String,
+        description: String,
+        createdAt: Float,
+        updatedAt: Float
+    }
+
     type Article {
         _id: String,
         title: String,
         description: String,
         comments: [Comment],
-        createdAt: Int,
-        updatedAt: Int
-    }
-
-    type Comment {
-        _id: String,
-        description: String,
-        createdAt: Int,
-        updatedAt: Int
+        createdAt: Float,
+        updatedAt: Float
     }
 
     type Query {
@@ -22,6 +22,10 @@ const typeDefs = gql`
         article (id: String): Article,
         comments (articleId: String): [Comment]
         comment (id: String): Comment
+    }
+
+    type Mutation {
+        addArticles (title: String, description: String): Article
     }
 `
 

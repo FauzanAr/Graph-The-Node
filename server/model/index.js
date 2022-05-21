@@ -27,7 +27,7 @@ const ArticleSchema = new Schema({
         required: true,
     },
     comments: {
-        type: [CommentSchema],
+        type: [CommentSchema]
     },
     createdAt: {
         type: Number,
